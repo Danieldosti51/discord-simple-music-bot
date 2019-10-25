@@ -13,6 +13,8 @@ import java.net.URL;
 
 public class MusicPlayEvent extends ListenerAdapter {
 
+    private static final String YOUTUBE_URL_FORMAT = "https://www.youtube.com/watch?v=";
+
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
         String message = event.getMessage().getContentRaw();
         if(!message.startsWith("!play")){
@@ -33,10 +35,11 @@ public class MusicPlayEvent extends ListenerAdapter {
             event.getChannel().sendMessage("No argument provided").queue();
             return;
         }
+
         if(!isUrl(argument)){
             YouTubeSearcher searcher = new YouTubeSearcher();
             String id = searcher.searchFor(argument);
-            argument = "https://www.youtube.com/watch?v="+id;
+            argument = YOUTUBE_URL_FORMAT+id;
         }
 
         VoiceChannel voiceChannel = memberVoiceState.getChannel();
@@ -49,9 +52,8 @@ public class MusicPlayEvent extends ListenerAdapter {
     private boolean isUrl(String input) {
         try {
             new URL(input);
-
             return true;
-        } catch (MalformedURLException ignored) {
+        } catch (MalformedURLException e) {
             return false;
         }
     }
