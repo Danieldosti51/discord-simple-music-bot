@@ -1,6 +1,5 @@
 package events;
 
-import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
@@ -17,7 +16,6 @@ public class LeaveChannelEvent extends ListenerAdapter {
             return;
         }
 
-        VoiceChannel voiceChannel = audioManager.getConnectedChannel();
         audioManager.closeAudioConnection();
         event.getChannel().sendMessage("okay, disconnected.").queue();
     }
