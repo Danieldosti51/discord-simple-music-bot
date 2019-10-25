@@ -17,6 +17,7 @@ public class bot {
         jda.addEventListener(new MusicStopEvent());
         jda.addEventListener(new MusicClearEvent());
         jda.addEventListener(new RespectsEvent());
+        jda.addEventListener(new LeaveChannelEvent());
 
         jda.getPresence().setActivity(Activity.watching(ACTIVITY)); //optional
     }
