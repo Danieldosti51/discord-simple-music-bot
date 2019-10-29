@@ -8,7 +8,7 @@ public class LeaveChannelEvent extends ListenerAdapter {
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw();
-        if(!message.replaceAll(" ","").toLowerCase().equals("!leave")) return;
+        if(!message.trim().toLowerCase().equals("!leave")) return;
         AudioManager audioManager = event.getGuild().getAudioManager();
 
         if(!audioManager.isConnected()) {
@@ -17,7 +17,7 @@ public class LeaveChannelEvent extends ListenerAdapter {
         }
 
         audioManager.closeAudioConnection();
-        event.getChannel().sendMessage("okay, disconnected.").queue();
+        event.getChannel().sendMessage("okay, disconnected").queue();
     }
 
 }

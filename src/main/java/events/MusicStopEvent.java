@@ -8,7 +8,7 @@ public class MusicStopEvent extends ListenerAdapter{
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw();
-        if (!message.startsWith("!skip")) {
+        if (!message.trim().equals("!skip")) {
             return;
         }
         PlayerManager manager = PlayerManager.getInstance();

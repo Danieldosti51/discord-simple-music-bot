@@ -8,12 +8,12 @@ public class RespectsEvent extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         if(event.getAuthor().isBot()) return;
         String message = event.getMessage().getContentRaw();
-        if (!message.startsWith("!f ")) {
+        if (!message.startsWith("!f")) {
             return;
         }
-        if (message.trim().equals("!f") || message.length() == 3) {
+        if (message.trim().equals("!f")) {
             event.getChannel().sendMessage(event.getAuthor().getName()+" has paid their respects.").queue();
-        } else {
+        } else if(message.charAt(2) == ' ') {
             String argument = message.substring(3);
             event.getChannel().sendMessage(event.getAuthor().getName()+" has paid their respects to "+argument+".").queue();
         }

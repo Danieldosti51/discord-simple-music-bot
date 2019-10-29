@@ -8,7 +8,7 @@ public class MusicClearEvent extends ListenerAdapter {
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw();
-        if (!message.startsWith("!clear")) {
+        if (!message.trim().equals("!clear")) {
             return;
         }
         PlayerManager manager = PlayerManager.getInstance();
