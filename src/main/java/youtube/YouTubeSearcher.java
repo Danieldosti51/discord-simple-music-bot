@@ -17,7 +17,7 @@ public class YouTubeSearcher {
     public String searchFor(String input){
         try {
             YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new GsonFactory(), null)
-                    .setApplicationName("youtube-cmdline-search-sample").build();
+                    .setApplicationName("youtube-search-discord").build();
 
             YouTube.Search.List search = youtube.search().list("id,snippet");
             initSearch(search, input);
