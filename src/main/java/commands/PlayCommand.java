@@ -1,45 +1,42 @@
-package events;
+package commands;
 
 import music.PlayerManager;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import youtube.YouTubeSearcher;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
-public class MusicPlayEvent extends ListenerAdapter {
+public class PlayCommand implements Command {
 
-    private static final String YOUTUBE_URL_FORMAT = "https://www.youtube.com/watch?v=";
+    @Override
+    public String getToken() {
+        return "play";
+    }
 
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event){
-        String message = event.getMessage().getContentRaw();
-        if(!message.startsWith("!play")){
-            return;
-        }
+    @Override
+    public void perform(GuildMessageReceivedEvent event, List<String> args) {
         AudioManager audioManager = event.getGuild().getAudioManager();
         GuildVoiceState memberVoiceState = event.getMember().getVoiceState();
 
         if(!memberVoiceState.inVoiceChannel()){
-            event.getChannel().sendMessage("Please join a channel").queue();
+            event.getChannel().sendMessage("Not currently in a channel!").queue();
             return;
         }
 
-        String argument;
-        try{
-            argument = message.substring(6);
-        } catch (StringIndexOutOfBoundsException e) {
-            event.getChannel().sendMessage("No argument provided").queue();
+        if(args.size() == 0) {
+            event.getChannel().sendMessage("No arguments provided!").queue();
             return;
         }
-
+        String argument = String.join(" ", args);
         if(!isUrl(argument)){
             YouTubeSearcher searcher = new YouTubeSearcher();
             String id = searcher.searchFor(argument);
-            argument = YOUTUBE_URL_FORMAT+id;
+            argument = "https://www.youtube.com/watch?v="+id;
         }
 
         VoiceChannel voiceChannel = memberVoiceState.getChannel();
@@ -53,7 +50,7 @@ public class MusicPlayEvent extends ListenerAdapter {
         try {
             new URL(input);
             return true;
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException ignored) {
             return false;
         }
     }

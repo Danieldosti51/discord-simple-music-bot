@@ -82,6 +82,16 @@ public class PlayerManager {
         musicManager.scheduler.queue(track);
     }
 
+    public void pauseTrack(TextChannel channel) {
+        GuildMusicManager musicManager = getGuildMusicManager(channel.getGuild());
+        musicManager.scheduler.pauseTrack();
+    }
+
+    public void resumeTrack(TextChannel channel) {
+        GuildMusicManager musicManager = getGuildMusicManager(channel.getGuild());
+        musicManager.scheduler.resumeTrack();
+    }
+
     public void skipTrack(TextChannel channel) {
         GuildMusicManager musicManager = getGuildMusicManager(channel.getGuild());
         musicManager.scheduler.nextTrack();

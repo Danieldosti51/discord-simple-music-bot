@@ -27,6 +27,14 @@ public class TrackScheduler extends AudioEventAdapter {
         player.startTrack(queue.poll(), false);
     }
 
+    public void pauseTrack() {
+        player.setPaused(true);
+    }
+
+    public void resumeTrack() {
+        player.setPaused(false);
+    }
+
     void clearTracks() {
         queue.clear();
     }
