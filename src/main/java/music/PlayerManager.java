@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerManager {
-    private static volatile PlayerManager INSTANCE;
+    private static PlayerManager INSTANCE;
     private final AudioPlayerManager playerManager;
     private final Map<Long, GuildMusicManager> musicManagers;
 
